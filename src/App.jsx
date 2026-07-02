@@ -1,16 +1,29 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar.jsx'
+import Footer from './components/Footer.jsx'
+import ScrollTopButton from './components/ScrollTopButton.jsx'
+import Home from './pages/Home.jsx'
+import Dashboard from './pages/Dashboard.jsx'
+import Notes from './pages/Notes.jsx'
+import Pomodoro from './pages/Pomodoro.jsx'
+import './styles/App.css'
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
+      <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/notes" element={<Notes />} />
+        <Route path="/pomodoro" element={<Pomodoro />} />
       </Routes>
-    </BrowserRouter>
-  );
+
+      <Footer />
+      <ScrollTopButton />
+    </>
+  )
 }
 
-export default App;
+export default App
