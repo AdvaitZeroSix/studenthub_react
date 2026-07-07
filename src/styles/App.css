@@ -894,3 +894,127 @@ footer{
 
 .pomo-badge-focus { background-color: rgba(42,110,63,0.4);  color: #6effa0; }
 .pomo-badge-break { background-color: rgba(26,74,110,0.4);  color: #7dd3f5; }
+
+.expense-section{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 40px 80px;
+}
+
+.expense-form{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-bottom:35px;
+}
+
+.expense-input,
+.expense-select{
+    padding:12px 16px;
+    border:1.5px solid var(--input-border);
+    border-radius:8px;
+    background:var(--card-color);
+    color:var(--text-color);
+    font-size:0.95rem;
+    outline:none;
+    transition:.2s;
+    min-width:180px;
+}
+
+.expense-input:focus,
+.expense-select:focus{
+    border-color:var(--accent-color);
+    box-shadow:var(--shadow-glow);
+}
+
+.expense-btn{
+    background:var(--accent-color);
+    color:#000;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.2s;
+}
+
+.expense-btn:hover{
+    transform:translateY(-2px);
+}
+
+.expense-summary{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.expense-total{
+    font-size:1.2rem;
+    font-weight:700;
+}
+
+.expense-list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.expense-card{
+    background:var(--card-color);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:.2s;
+}
+
+.expense-card:hover{
+    transform:translateY(-2px);
+}
+
+.expense-info{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.expense-title{
+    font-size:1rem;
+    font-weight:600;
+}
+
+.expense-category{
+    color:var(--accent-color);
+    font-size:.85rem;
+}
+
+.expense-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.expense-amount{
+    font-weight:700;
+    font-size:1rem;
+}
+
+.expense-delete{
+    background:#ff4d4d;
+    color:white;
+    border:none;
+    border-radius:8px;
+    padding:8px 12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.expense-delete:hover{
+    background:#e03b3b;
+}

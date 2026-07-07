@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Notes from './pages/Notes.jsx'
 import Pomodoro from './pages/Pomodoro.jsx'
+import Expenses from './pages/Expenses.jsx'
 import './styles/App.css'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/pomodoro" element={<Pomodoro />} />
+        <Route path="/expenses" element={<Expenses />} />
       </Routes>
 
       <Footer />

@@ -50,6 +50,12 @@ function Dashboard() {
             <button onClick={() => navigate('/pomodoro')}>Open Timer</button>
           </Card>
           <Card
+            title="Expense Tracker"
+            description="Track your daily expenses with MongoDB."
+          >
+            <button onClick={() => navigate('/expenses')}>Open Expenses</button>
+          </Card>
+          <Card
             title="Tasks Manager"
             description="Manage assignments and deadlines efficiently"
           >

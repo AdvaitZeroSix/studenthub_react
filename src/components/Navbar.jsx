@@ -40,6 +40,9 @@ function Navbar() {
         <NavLink to="/pomodoro" onClick={closeMenu} className={navLinkClass}>
           Pomodoro
         </NavLink>
+        <NavLink to="/expenses" onClick={closeMenu} className={navLinkClass}>
+          Expenses
+        </NavLink>
       </div>
       <div className="nav-right">
         <div className="theme-switch" onClick={toggleTheme}>
