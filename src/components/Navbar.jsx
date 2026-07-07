@@ -15,8 +15,6 @@ function Navbar() {
     return isActive ? 'Active' : ''
   }
 
-  // "About" is a section on the Home page, so link there with a hash when
-  // we're not already on Home.
   const aboutHref = location.pathname === '/' ? '#about' : '/#about'
 
   return (
