@@ -1,8 +1,26 @@
+import { useEffect, useState } from "react";
 import ExpenseCard from "./ExpenseCard";
 
 function ExpenseList() {
 
-  const expenses = [];
+const [expenses, setExpenses] = useState([]);
+
+useEffect(() => {
+    fetchExpenses();
+}, []);
+
+async function fetchExpenses() {
+    try {
+        const response = await fetch("http://localhost:5000/api/expenses");
+
+        const data = await response.json();
+
+        setExpenses(data);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
   return (
     <div>
