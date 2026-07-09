@@ -4,6 +4,10 @@ import ExpenseCard from "./ExpenseCard";
 function ExpenseList() {
 
 const [expenses, setExpenses] = useState([]);
+const totalExpense = expenses.reduce(
+    (total, expense) => total + expense.amount,
+    0
+);
 
 useEffect(() => {
     fetchExpenses();
@@ -28,7 +32,7 @@ async function fetchExpenses() {
       <div className="expense-summary">
 
         <div className="expense-total">
-          Total Expenses : ₹0
+            Total Expenses : ₹{totalExpense}
         </div>
 
         <select className="expense-select">
