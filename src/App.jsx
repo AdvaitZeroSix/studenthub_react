@@ -7,13 +7,14 @@ import Dashboard from './pages/Dashboard.jsx'
 import Notes from './pages/Notes.jsx'
 import Pomodoro from './pages/Pomodoro.jsx'
 import Expenses from './pages/Expenses.jsx'
+import CursorGlow from "./components/CursorGlow"
 import './styles/App.css'
 
 function App() {
   return (
     <>
       <Navbar />
-
+      <CursorGlow />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
