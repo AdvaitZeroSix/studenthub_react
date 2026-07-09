@@ -1,31 +1,81 @@
-function ExpenseForm() {
-  return (
-    <div className="expense-form">
-      <input
-        type="text"
-        placeholder="Expense Title"
-        className="expense-input"
-      />
+import { useState } from "react";
 
-      <input
-        type="number"
-        placeholder="Amount"
-        className="expense-input"
-      />
+function ExpenseForm({ fetchExpenses }) {
 
-      <select className="expense-select">
-        <option>Food</option>
-        <option>Transport</option>
-        <option>Study</option>
-        <option>Shopping</option>
-        <option>Other</option>
-      </select>
+    const [title, setTitle] = useState("");
+    const [amount, setAmount] = useState("");
+    const [category, setCategory] = useState("Food");
 
-      <button className="expense-btn">
-        Add Expense
-      </button>
-    </div>
-  )
+    async function handleSubmit(e) {
+
+        e.preventDefault();
+
+        try {
+
+            await fetch("http://localhost:5000/api/expenses", {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                },
+
+                body: JSON.stringify({
+                    title,
+                    amount: Number(amount),
+                    category,
+                }),
+            });
+
+            setTitle("");
+            setAmount("");
+            setCategory("Food");
+
+            fetchExpenses();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return (
+
+        <form className="expense-form" onSubmit={handleSubmit}>
+
+            <input
+                className="expense-input"
+                type="text"
+                placeholder="Expense Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
+
+            <input
+                className="expense-input"
+                type="number"
+                placeholder="Amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+            />
+
+            <select
+                className="expense-select"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+            >
+                <option>Food</option>
+                <option>Transport</option>
+                <option>Study</option>
+                <option>Shopping</option>
+                <option>Other</option>
+            </select>
+
+            <button className="expense-btn">
+                Add Expense
+            </button>
+
+        </form>
+
+    );
 }
 
-export default ExpenseForm
+export default ExpenseForm;

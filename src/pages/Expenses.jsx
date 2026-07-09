@@ -1,30 +1,58 @@
+import { useEffect, useState } from "react";
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 
 function Expenses() {
-    return (
-        <>
-            <section className="hero">
-                <h1 className="text-5xl font-bold tracking-tight mb-4">
-                    Expense Tracker
-                </h1>
 
-                <p className="text-lg opacity-70 max-w-xl mx-auto mb-8">
-                    Track your daily expenses with a MongoDB powered backend.
-                </p>
-            </section>
+  const [expenses, setExpenses] = useState([]);
 
-            <section className="expense-section">
-                <h2 className="text-2xl font-bold mb-8 tracking-tight">
-                    Manage Expenses
-                </h2>
+  async function fetchExpenses() {
 
-                <ExpenseForm />
+    try {
 
-                <ExpenseList />
-            </section>
-        </>
-    );
+      const response = await fetch(
+        "http://localhost:5000/api/expenses"
+      );
+
+      const data = await response.json();
+
+      setExpenses(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchExpenses();
+  }, []);
+
+  return (
+    <>
+      <section className="hero">
+
+        <h1>Expense Tracker</h1>
+
+        <p>
+          Track your daily expenses.
+        </p>
+
+      </section>
+
+      <section className="expense-section">
+
+        <ExpenseForm
+          fetchExpenses={fetchExpenses}
+        />
+
+        <ExpenseList
+          expenses={expenses}
+          fetchExpenses={fetchExpenses}
+        />
+
+      </section>
+    </>
+  );
 }
 
 export default Expenses;
