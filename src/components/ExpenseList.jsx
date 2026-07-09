@@ -1,13 +1,23 @@
 import ExpenseCard from "./ExpenseCard";
 
 function ExpenseList({
-  expenses,
-  fetchExpenses,
-}) {
-  const totalExpense = expenses.reduce(
-    (total, expense) => total + expense.amount,
-    0
-  );
+    expenses,
+    fetchExpenses,
+    selectedCategory,
+    setSelectedCategory,
+})
+{
+    const filteredExpenses =
+    selectedCategory === "All"
+        ? expenses
+        : expenses.filter(
+              (expense) =>
+                  expense.category === selectedCategory
+          );
+    const totalExpense = filteredExpenses.reduce(
+        (total, expense) => total + expense.amount,
+        0
+    );
 
   return (
     <>
@@ -16,7 +26,13 @@ function ExpenseList({
           Total Expenses : ₹{totalExpense}
         </div>
 
-        <select className="expense-select">
+        <select
+            className="expense-select"
+            value={selectedCategory}
+            onChange={(e) =>
+                setSelectedCategory(e.target.value)
+            }
+        >
           <option>All</option>
           <option>Food</option>
           <option>Transport</option>
@@ -32,7 +48,7 @@ function ExpenseList({
             No expenses added yet.
           </p>
         ) : (
-          expenses.map((expense) => (
+          filteredExpenses.map((expense) => (
             <ExpenseCard
               key={expense._id}
               expense={expense}

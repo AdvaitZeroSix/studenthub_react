@@ -5,6 +5,7 @@ import ExpenseList from "../components/ExpenseList";
 function Expenses() {
 
   const [expenses, setExpenses] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   async function fetchExpenses() {
 
@@ -46,8 +47,10 @@ function Expenses() {
         />
 
         <ExpenseList
-          expenses={expenses}
-          fetchExpenses={fetchExpenses}
+            expenses={expenses}
+            fetchExpenses={fetchExpenses}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
         />
 
       </section>
