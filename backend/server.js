@@ -17,6 +17,7 @@ mongoose.connect(process.env.MONGO_URI)
     .catch((err) => {
         console.log("MongoDB Connection Error:", err);
     });
+    
 app.use("/api/expenses", expenseRoutes);
 app.get("/", (req, res) => {
     res.send("StudentHub Backend is Running!");
