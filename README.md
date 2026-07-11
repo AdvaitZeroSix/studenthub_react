@@ -2,7 +2,7 @@
 
 StudentHub is a personal campus productivity hub built over the course of the ISTE Summer School 2026 Web Dev bootcamp. It started as a static landing page and has grown week by week into a full-stack application with a React frontend, client-side routing, persistent local storage, and an Express + MongoDB backend powering a live Expense Tracker.
 
-> Built by **[Your Name]** as part of ISTE Summer School 2026 – WebDev Domain.
+> Built by **Advait Saxena** as part of ISTE Summer School 2026 – WebDev Domain.
 
 ## Project Timeline
 
