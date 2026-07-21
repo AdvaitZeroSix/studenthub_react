@@ -1,39 +1,56 @@
-import { useState } from 'react'
-
-const notesData = [
-  {
-    title: 'Data Structures',
-    desc: 'Linked Lists, Stacks, Queues, Trees',
-    updated: 'June 15, 2026',
-  },
-  {
-    title: 'Operating Systems',
-    desc: 'Processes, Scheduling, Memory Management',
-    updated: 'June 10, 2026',
-  },
-  {
-    title: 'Database Management Systems',
-    desc: 'SQL, Normalization, Transactions',
-    updated: 'June 12, 2026',
-  },
-  {
-    title: 'Computer Networks',
-    desc: 'OSI Model, TCP/IP, Routing',
-    updated: 'June 8, 2026',
-  },
-]
+import { useEffect, useState } from "react"
+import { API_URL } from "../utils/api"
+import { useAuth } from "../context/AuthContext.jsx"
+import NoteForm from "../components/NoteForm.jsx"
+import NoteCard from "../components/NoteCard.jsx"
 
 function Notes() {
+  const { token } = useAuth()
+
+  const [notes, setNotes] = useState([])
   const [query, setQuery] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  const filteredNotes = notesData.filter((note) => {
-    const q = query.toLowerCase()
-    return note.title.toLowerCase().includes(q) || note.desc.toLowerCase().includes(q)
-  })
+  async function fetchNotes() {
+    setLoading(true)
+    setError('')
 
-  function handleUpload() {
-    alert('Upload feature coming soon!')
+    try {
+      const response = await fetch(`${API_URL}/api/notes`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      if (!response.ok) {
+        setError('Something went wrong. Please try again.')
+        setLoading(false)
+        return
+      }
+
+      const data = await response.json()
+      setNotes(data)
+    } catch (error) {
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
+
+  useEffect(() => {
+    fetchNotes()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const filteredNotes = notes.filter((note) => {
+    const q = query.toLowerCase()
+    return (
+      note.title.toLowerCase().includes(q) ||
+      note.subject.toLowerCase().includes(q) ||
+      note.content.toLowerCase().includes(q)
+    )
+  })
 
   return (
     <>
@@ -44,10 +61,8 @@ function Notes() {
         </p>
         <div className="upload-section">
           <h2 className="text-lg font-semibold mb-2">Add New Notes</h2>
-          <p className="text-sm opacity-65 mb-4">Upload PDFs, lecture notes, or study material.</p>
-          <button id="uploadBtn" onClick={handleUpload}>
-            Upload Notes
-          </button>
+          <p className="text-sm opacity-65 mb-4">Write a note and save it to your account.</p>
+          <NoteForm fetchNotes={fetchNotes} />
         </div>
       </section>
 
@@ -58,30 +73,38 @@ function Notes() {
             id="searchBar"
             className="search-bar"
             type="text"
-            placeholder="Search notes by subject..."
+            placeholder="Search notes by title or subject..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
         </section>
-        <div className="feature-container mt-8">
-          {filteredNotes.map((note) => (
-            <div className="card note-card" key={note.title}>
-              <h3>{note.title}</h3>
-              <p>{note.desc}</p>
-              <p className="text-xs opacity-50">Last Updated: {note.updated}</p>
-              <button>Open Notes</button>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      <p
-        className="no-results"
-        id="noResults"
-        style={{ display: filteredNotes.length === 0 ? 'block' : 'none' }}
-      >
-        No notes found matching your search.
-      </p>
+        {loading ? (
+          <p className="task-empty">Loading your notes...</p>
+        ) : error ? (
+          <p className="auth-error">{error}</p>
+        ) : (
+          <>
+            <div className="feature-container mt-8">
+              {filteredNotes.map((note) => (
+                <NoteCard key={note._id} note={note} fetchNotes={fetchNotes} />
+              ))}
+            </div>
+
+            {notes.length === 0 && (
+              <p className="no-results" style={{ display: 'block' }}>
+                No notes yet. Add your first one above.
+              </p>
+            )}
+
+            {notes.length > 0 && filteredNotes.length === 0 && (
+              <p className="no-results" style={{ display: 'block' }}>
+                No notes found matching your search.
+              </p>
+            )}
+          </>
+        )}
+      </section>
     </>
   )
 }
