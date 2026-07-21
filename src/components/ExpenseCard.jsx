@@ -1,16 +1,24 @@
+import { API_URL } from "../utils/api";
+import { useAuth } from "../context/AuthContext.jsx";
+
 function ExpenseCard({
   expense,
   fetchExpenses,
 }) {
+
+  const { token } = useAuth();
 
   async function handleDelete() {
 
     try {
 
       await fetch(
-        `http://localhost:5000/api/expenses/${expense._id}`,
+        `${API_URL}/api/expenses/${expense._id}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -21,8 +29,10 @@ function ExpenseCard({
     }
   }
 
+  const isIncome = expense.type === "income";
+
   return (
-    <div className="expense-card">
+    <div className={`expense-card ${isIncome ? "expense-card-income" : "expense-card-expense"}`}>
 
       <div className="expense-info">
 
@@ -38,8 +48,8 @@ function ExpenseCard({
 
       <div className="expense-right">
 
-        <div className="expense-amount">
-          ₹{expense.amount}
+        <div className={`expense-amount ${isIncome ? "amount-income" : "amount-expense"}`}>
+          {isIncome ? "+" : "-"}₹{expense.amount}
         </div>
 
         <button

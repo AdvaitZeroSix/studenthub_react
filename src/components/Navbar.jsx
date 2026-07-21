@@ -1,11 +1,20 @@
 import { useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import useTheme from '../hooks/useTheme.js'
+import { useAuth } from '../context/AuthContext.jsx'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { isLight, toggleTheme } = useTheme()
   const location = useLocation()
+  const navigate = useNavigate()
+  const { isAuthenticated, user, logout } = useAuth()
+
+  function handleLogout() {
+    logout()
+    closeMenu()
+    navigate('/')
+  }
 
   function closeMenu() {
     setMenuOpen(false)
@@ -45,6 +54,23 @@ function Navbar() {
         </NavLink>
       </div>
       <div className="nav-right">
+        {isAuthenticated ? (
+          <div className="nav-auth">
+            <span className="nav-user">Hi, {user?.name?.split(' ')[0]}</span>
+            <button className="nav-logout" onClick={handleLogout}>
+              Log Out
+            </button>
+          </div>
+        ) : (
+          <div className="nav-auth">
+            <NavLink to="/login" onClick={closeMenu} className={navLinkClass}>
+              Log In
+            </NavLink>
+            <NavLink to="/signup" onClick={closeMenu} className={navLinkClass}>
+              Sign Up
+            </NavLink>
+          </div>
+        )}
         <div className="theme-switch" onClick={toggleTheme}>
           <div className={`switch-knob ${isLight ? 'active' : ''}`}></div>
         </div>
