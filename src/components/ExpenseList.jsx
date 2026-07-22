@@ -1,108 +1,104 @@
-import { useState } from "react";
-import { API_URL } from "../utils/api";
-import { useAuth } from "../context/AuthContext.jsx";
+import ExpenseCard from "./ExpenseCard";
 
-function ExpenseForm({ fetchExpenses }) {
+const CATEGORIES = ["All", "Food", "Transport", "Study", "Shopping", "Other"];
 
-    const { token } = useAuth();
+function ExpenseList({
+  expenses,
+  fetchExpenses,
+  selectedCategory,
+  setSelectedCategory,
+  selectedType,
+  setSelectedType,
+}) {
 
-    const [title, setTitle] = useState("");
-    const [amount, setAmount] = useState("");
-    const [category, setCategory] = useState("Food");
-    const [type, setType] = useState("expense");
-    const [error, setError] = useState("");
+  const totalIncome = expenses
+    .filter((expense) => expense.type === "income")
+    .reduce((sum, expense) => sum + expense.amount, 0);
 
-    async function handleSubmit(e) {
+  const totalExpense = expenses
+    .filter((expense) => expense.type === "expense")
+    .reduce((sum, expense) => sum + expense.amount, 0);
 
-        e.preventDefault();
-        setError("");
+  const netBalance = totalIncome - totalExpense;
 
-        try {
+  const filteredExpenses = expenses.filter((expense) => {
+    const matchesType =
+      selectedType === "All" ||
+      (selectedType === "Income" && expense.type === "income") ||
+      (selectedType === "Expenses" && expense.type === "expense");
 
-            const response = await fetch(`${API_URL}/api/expenses`, {
-                method: "POST",
+    const matchesCategory =
+      selectedCategory === "All" || expense.category === selectedCategory;
 
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
+    return matchesType && matchesCategory;
+  });
 
-                body: JSON.stringify({
-                    title,
-                    amount: Number(amount),
-                    category,
-                    type,
-                }),
-            });
+  return (
 
-            if (!response.ok) {
-                const data = await response.json();
-                setError(data.message || "Something went wrong. Please try again.");
-                return;
-            }
+    <>
 
-            setTitle("");
-            setAmount("");
-            setCategory("Food");
-            setType("expense");
+      <div className="balance-card">
 
-            fetchExpenses();
+        <div className="balance-item">
+          <div className="balance-label">Total Income</div>
+          <div className="balance-value amount-income">+₹{totalIncome}</div>
+        </div>
 
-        } catch (error) {
-            setError("Something went wrong. Please try again.");
-        }
-    }
+        <div className="balance-item balance-net">
+          <div className="balance-label">Net Balance</div>
+          <div className="balance-value">₹{netBalance}</div>
+        </div>
 
-    return (
+        <div className="balance-item">
+          <div className="balance-label">Total Expenses</div>
+          <div className="balance-value amount-expense">-₹{totalExpense}</div>
+        </div>
 
-        <form className="expense-form" onSubmit={handleSubmit}>
+      </div>
 
-            <select
-                className="expense-select"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-            >
-                <option value="expense">Expense</option>
-                <option value="income">Income</option>
-            </select>
+      <div className="filter-group">
 
-            <input
-                className="expense-input"
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+        {["All", "Income", "Expenses"].map((type) => (
+          <button
+            key={type}
+            className={`filter-btn ${selectedType === type ? "filter-btn-active" : ""}`}
+            onClick={() => setSelectedType(type)}
+          >
+            {type}
+          </button>
+        ))}
+
+        <select
+          className="expense-select"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          {CATEGORIES.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+
+      </div>
+
+      {filteredExpenses.length === 0 ? (
+        <p className="task-empty">No entries match this filter yet.</p>
+      ) : (
+        <div className="expense-list">
+          {filteredExpenses.map((expense) => (
+            <ExpenseCard
+              key={expense._id}
+              expense={expense}
+              fetchExpenses={fetchExpenses}
             />
+          ))}
+        </div>
+      )}
 
-            <input
-                className="expense-input"
-                type="number"
-                placeholder="Amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-            />
+    </>
 
-            <select
-                className="expense-select"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-            >
-                <option>Food</option>
-                <option>Transport</option>
-                <option>Study</option>
-                <option>Shopping</option>
-                <option>Other</option>
-            </select>
-
-            <button className="expense-btn">
-                Add {type === "income" ? "Income" : "Expense"}
-            </button>
-
-            {error && <p className="auth-error expense-form-error">{error}</p>}
-
-        </form>
-
-    );
+  );
 }
 
-export default ExpenseForm;
+export default ExpenseList;
