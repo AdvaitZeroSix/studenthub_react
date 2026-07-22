@@ -1,6 +1,6 @@
 # StudentHub
 
-Last updated: July 21, 2026
+Last updated: July 23, 2026
 
 StudentHub is a personal campus productivity hub built over the course of the ISTE Summer School 2026 Web Dev bootcamp. It started as a static landing page and has grown week by week into a full-stack application with a React frontend, JWT authentication, and an Express + MongoDB backend powering the Expense Tracker and Notes features.
 
