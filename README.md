@@ -11,8 +11,8 @@ StudentHub is a personal campus productivity hub built over the course of the IS
 | Week | Milestone | Status |
 |------|-----------|--------|
 | Week 1 | Responsive static landing page (Navbar, Hero, extra section), deployed on GitHub Pages | Done |
-| Week 2 | Interactive dashboard (2+ components) with `localStorage` persistence, styled with Tailwind, Figma wireframe | Done |
-| Week 3 | Migrated to React (Vite), 3+ components, React Router, `useState`/`useEffect`, deployed on Vercel | Done |
+| Week 2 | Interactive dashboard with `localStorage` persistence, styled with Tailwind, Figma wireframe | Done |
+| Week 3 | Migrated to React (Vite), React Router, `useState`/`useEffect`, deployed on Vercel | Done |
 | Week 4 | Express + MongoDB backend, full REST API, Expense Tracker connected end to end | Done |
 | Week 5 | JWT based authentication and cloud deployment | Done |
 | Week 6 | Polish, CI/CD basics, final README, and live demo | Done |
@@ -128,9 +128,9 @@ PORT=5000
 
 ## Deployment
 
-- **Frontend (Vercel):** https://studenthub-yourname.vercel.app
-- **Backend (Vercel):** https://studenthub-api.vercel.app
-- **Week 1 static version (GitHub Pages):** https://yourusername.github.io/studenthub
+- **Frontend (Vercel):** [https://studenthub-yourname.vercel.app](https://studenthub-react.vercel.app/)
+- **Backend (Vercel):** [https://studenthub-api.vercel.app](https://studenthub-react-backend.vercel.app/)
+- **Week 1 static version (GitHub Pages):** [https://yourusername.github.io/studenthub](https://github.com/AdvaitZeroSix/studenthub_Advait)
 
 On Vercel, set `VITE_API_URL` on the frontend project and `MONGO_URI` / `JWT_SECRET` / `FRONTEND_URL` on the backend project under Environment Variables.
 
