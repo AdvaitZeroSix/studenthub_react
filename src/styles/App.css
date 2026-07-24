@@ -77,6 +77,8 @@ nav a.Active::after{
     text-align: center;
     padding: 90px 40px 70px;
     animation: fadeInUp 0.6s ease both;
+    position: relative;
+    background: radial-gradient(560px circle at 50% 0%, var(--accent-dim), transparent 70%);
 }
 
 .hero h1{
@@ -127,6 +129,25 @@ nav a.Active::after{
     font-weight: 700;
     margin-bottom: 32px;
     letter-spacing: -0.3px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 14px;
+}
+
+.features h2::after,
+.task-manager h2::after,
+.about h2::after,
+.stats h2::after,
+.pomodoro-section h2::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
 }
 
 .feature-container{
@@ -142,6 +163,7 @@ nav a.Active::after{
     width: 260px;
     border-radius: 16px;
     border: 1px solid var(--card-border);
+    border-top: 2px solid rgba(50,214,83,0.25);
     box-shadow: var(--shadow-card);
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
@@ -213,7 +235,7 @@ footer{
     background-color: var(--footer-color);
     color: var(--footer-text);
     font-size: 0.85rem;
-    border-top: 1px solid var(--card-border);
+    border-top: 1px solid rgba(50,214,83,0.15);
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 

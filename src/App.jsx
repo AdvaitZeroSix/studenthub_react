@@ -11,9 +11,12 @@ import Expenses from './pages/Expenses.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import CursorGlow from "./components/CursorGlow"
+import useScrollReveal from './hooks/useScrollReveal.js'
 import './styles/App.css'
 
 function App() {
+  useScrollReveal()
+
   return (
     <>
       <Navbar />
