@@ -2,6 +2,41 @@ import ExpenseCard from "./ExpenseCard";
 
 const CATEGORIES = ["All", "Food", "Transport", "Study", "Shopping", "Other"];
 
+function escapeCSVField(value) {
+  const stringValue = String(value);
+  if (stringValue.includes(",") || stringValue.includes("\"") || stringValue.includes("\n")) {
+    return `"${stringValue.replace(/"/g, "\"\"")}"`;
+  }
+  return stringValue;
+}
+
+function downloadExpensesCSV(expenses) {
+  const headers = ["Title", "Amount", "Category", "Type", "Date"];
+
+  const rows = expenses.map((expense) => [
+    expense.title,
+    expense.amount,
+    expense.category,
+    expense.type,
+    new Date(expense.date).toLocaleDateString(),
+  ]);
+
+  const csvContent = [headers, ...rows]
+    .map((row) => row.map(escapeCSVField).join(","))
+    .join("\n");
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", "expenses.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
 function ExpenseList({
   expenses,
   fetchExpenses,
@@ -79,6 +114,14 @@ function ExpenseList({
             </option>
           ))}
         </select>
+
+        <button
+          className="export-btn"
+          onClick={() => downloadExpensesCSV(filteredExpenses)}
+          disabled={filteredExpenses.length === 0}
+        >
+          Export CSV
+        </button>
 
       </div>
 

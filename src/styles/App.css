@@ -1221,6 +1221,28 @@ footer{
     border-color:var(--accent-color);
 }
 
+.export-btn{
+    background:transparent;
+    border:1.5px solid var(--accent-color);
+    color:var(--accent-color);
+    border-radius:8px;
+    padding:8px 16px;
+    cursor:pointer;
+    font-size:0.85rem;
+    font-weight:600;
+    transition:.2s;
+}
+
+.export-btn:hover:not(:disabled){
+    background:var(--accent-color);
+    color:#000;
+}
+
+.export-btn:disabled{
+    opacity:0.4;
+    cursor:not-allowed;
+}
+
 /* ===== Expense card income/expense left border ===== */
 .expense-card-income{
     border-left:4px solid #2a6e3f;
