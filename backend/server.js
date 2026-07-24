@@ -19,16 +19,38 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("Connected to MongoDB");
-    })
-    .catch((err) => {
-    console.error("MongoDB Connection Error:");
-    console.error(err);
-    console.error(err.message);
-    console.error(err.reason);
-    });
+let connectionPromise = null;
+
+function connectDB() {
+    if (mongoose.connection.readyState === 1) {
+        return Promise.resolve();
+    }
+
+    if (!connectionPromise) {
+        connectionPromise = mongoose.connect(process.env.MONGO_URI, {
+            maxPoolSize: 10,
+        }).then(() => {
+            console.log("Connected to MongoDB");
+        }).catch((err) => {
+            connectionPromise = null;
+            console.error("MongoDB Connection Error:", err.message);
+            throw err;
+        });
+    }
+
+    return connectionPromise;
+}
+
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        res.status(503).json({
+            message: "Database connection failed. Please try again.",
+        });
+    }
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
@@ -40,8 +62,10 @@ app.get("/", (req, res) => {
 
 if (process.env.NODE_ENV !== "production") {
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-        console.log(`Server running on http://localhost:${PORT}`);
+    connectDB().then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server running on http://localhost:${PORT}`);
+        });
     });
 }
 
