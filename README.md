@@ -133,11 +133,3 @@ PORT=5000
 - **Week 1 static version (GitHub Pages):** [https://yourusername.github.io/studenthub](https://github.com/AdvaitZeroSix/studenthub_Advait)
 
 On Vercel, set `VITE_API_URL` on the frontend project and `MONGO_URI` / `JWT_SECRET` / `FRONTEND_URL` on the backend project under Environment Variables.
-
-## Roadmap
-
-- [x] JWT based authentication
-- [x] Expense Tracker income/expense and balance
-- [x] Notes as a full-stack feature
-- [ ] Wildcard feature (analytics charts or AI insights)
-- [ ] Final live demo
