@@ -115,9 +115,12 @@ PORT=5000
 - `FRONTEND_URL` — used for the CORS allowlist so the frontend is permitted to call the backend.
 - `PORT` — used for local development only.
 
-## Deployment
+## Live Deployment
 
-Both the frontend and backend are deployed separately on Vercel.
+- **Frontend:** [https://studenthub-react.vercel.app](https://studenthub-react.vercel.app/)
+- **Backend:** [https://studenthub-react-backend.vercel.app](https://studenthub-react-backend.vercel.app/)
+
+Both are deployed separately on Vercel.
 
 - **Frontend** — set `VITE_API_URL` in the Vercel project's environment variables, pointing to the deployed backend URL.
 - **Backend** — set `MONGO_URI`, `JWT_SECRET`, and `FRONTEND_URL` in the Vercel project's environment variables, pointing to the deployed frontend URL.
