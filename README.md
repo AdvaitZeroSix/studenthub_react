@@ -4,13 +4,13 @@ StudentHub is a full-stack productivity app for students. It brings together a t
 
 ## Features
 
-- **Authentication** — signup and login with JWT. Passwords are hashed with bcrypt. Protected routes redirect to login when the user isn't authenticated. Inline error messages for wrong password, unknown email, duplicate signup, and empty fields (no raw console errors shown to the user).
-- **Dashboard** — central hub with quick links to every feature, plus a task manager (add, complete, delete, clear completed, priority levels) persisted in the browser via `localStorage`.
-- **Notes** — full CRUD backed by MongoDB, scoped to the logged-in user. Add a note with a title, subject, and content; search across all three; delete notes.
-- **Expense Tracker** — full CRUD wired to MongoDB, scoped to the logged-in user. Add an income or expense entry with a title, amount, and category. A balance card shows total income, total expenses, and net balance. Entries are color-coded (green for income, red for expenses) and can be filtered by type (All / Income / Expenses) and by category.
-- **Pomodoro Timer** — 25/5 focus and break timer with start, pause, and reset controls, a circular progress ring, and a running log of completed sessions for the day.
-- **Theme toggle** — light/dark mode switch in the navbar.
-- **Responsive design** — collapsible navbar on mobile, responsive layout throughout.
+- **Authentication** - signup and login with JWT. Passwords are hashed with bcrypt. Protected routes redirect to login when the user isn't authenticated. Inline error messages for wrong password, unknown email, duplicate signup, and empty fields (no raw console errors shown to the user).
+- **Dashboard** - central hub with quick links to every feature, plus a task manager (add, complete, delete, clear completed, priority levels) persisted in the browser via `localStorage`.
+- **Notes** - full CRUD backed by MongoDB, scoped to the logged-in user. Add a note with a title, subject, and content; search across all three; delete notes.
+- **Expense Tracker** - full CRUD wired to MongoDB, scoped to the logged-in user. Add an income or expense entry with a title, amount, and category. A balance card shows total income, total expenses, and net balance. Entries are color-coded (green for income, red for expenses) and can be filtered by type (All / Income / Expenses) and by category.
+- **Pomodoro Timer** - 25/5 focus and break timer with start, pause, and reset controls, a circular progress ring, and a running log of completed sessions for the day.
+- **Theme toggle** - light/dark mode switch in the navbar.
+- **Responsive design** - collapsible navbar on mobile, responsive layout throughout.
 
 ## Tech Stack
 
