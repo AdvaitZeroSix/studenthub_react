@@ -26,7 +26,7 @@ StudentHub is a full-stack productivity app for students. It brings together a t
 - MongoDB with Mongoose
 - JWT (`jsonwebtoken`) for authentication
 - `bcryptjs` for password hashing
-- `cors` and `dotenv`
+- `cors`, `helmet` (security headers), `express-rate-limit` (20 login or signup attempts per 15 minutes per IP) and `dotenv`
 
 ## File Structure
 
@@ -40,7 +40,6 @@ studenthub-react/
 │   ├── hooks/                # useTheme, useScrollTop, useScrollReveal, useTasks, usePomodoro
 │   ├── utils/                 # api.js (backend base URL)
 │   ├── styles/                 # index.css (resets, variables, keyframes), App.css (component styles)
-│   ├── assets/                  # fonts, icons, images
 │   ├── App.jsx
 │   └── main.jsx
 ├── public/                # favicon.svg, icons.svg

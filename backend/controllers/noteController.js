@@ -6,7 +6,7 @@ async function getNotes(req, res) {
         res.json(notes);
     } catch (error) {
         res.status(500).json({
-            message: error.message,
+            message: "Something went wrong. Please try again.",
         });
     }
 }
@@ -54,7 +54,7 @@ async function deleteNote(req, res) {
         });
     } catch (error) {
         res.status(500).json({
-            message: error.message,
+            message: "Something went wrong. Please try again.",
         });
     }
 }

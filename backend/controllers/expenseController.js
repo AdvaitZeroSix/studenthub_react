@@ -6,7 +6,7 @@ async function getExpenses(req, res) {
         res.json(expenses);
     } catch (error) {
         res.status(500).json({
-            message: error.message,
+            message: "Something went wrong. Please try again.",
         });
     }
 }
@@ -55,7 +55,7 @@ async function deleteExpense(req, res) {
         });
     } catch (error) {
         res.status(500).json({
-            message: error.message,
+            message: "Something went wrong. Please try again.",
         });
     }
 }

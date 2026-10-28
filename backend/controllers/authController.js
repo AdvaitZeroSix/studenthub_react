@@ -18,6 +18,13 @@ async function signup(req, res) {
             });
         }
 
+        // Reject objects or arrays sent in place of text
+        if (typeof name !== "string" || typeof email !== "string" || typeof password !== "string") {
+            return res.status(400).json({
+                message: "Name, email, and password must be text.",
+            });
+        }
+
         if (password.length < 6) {
             return res.status(400).json({
                 message: "Password must be at least 6 characters.",
@@ -52,7 +59,7 @@ async function signup(req, res) {
         });
     } catch (error) {
         res.status(500).json({
-            message: error.message,
+            message: "Something went wrong. Please try again.",
         });
     }
 }
@@ -64,6 +71,13 @@ async function login(req, res) {
         if (!email || !password) {
             return res.status(400).json({
                 message: "Email and password are both required.",
+            });
+        }
+
+        // Reject objects or arrays sent in place of text
+        if (typeof email !== "string" || typeof password !== "string") {
+            return res.status(400).json({
+                message: "Email and password must be text.",
             });
         }
 

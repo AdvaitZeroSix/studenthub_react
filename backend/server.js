@@ -4,6 +4,8 @@ const expenseRoutes = require("./routes/expenseRoutes");
 const authRoutes = require("./routes/authRoutes");
 const noteRoutes = require("./routes/noteRoutes");
 const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
 const app = express();
@@ -16,8 +18,22 @@ const corsOptions = {
     credentials: true,
 };
 
+// Vercel sits behind a proxy, so trust it to read the real client IP
+app.set("trust proxy", 1);
+
+app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Slow down password guessing: 20 login or signup attempts per 15 minutes per IP
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { message: "Too many attempts. Please try again in a few minutes." },
+});
+app.use("/api/auth", authLimiter);
 
 let connectionPromise = null;
 
